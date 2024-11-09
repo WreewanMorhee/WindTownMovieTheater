@@ -1,0 +1,34 @@
+@keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  .show {
+    animation: slideIn 0.25s linear forwards;
+  }
+  .hide {
+    animation: slideIn 0.25s linear reverse forwards;
+  }
+
+
+
+
+
+  @keyframes slideIn2 {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.8;
+    }
+  }
+  .show2 {
+    animation: slideIn2 0.25s linear forwards;
+  }
+  .hide2 {
+    animation: slideIn2 0.25s linear reverse forwards;
+  }

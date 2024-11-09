@@ -1,0 +1,1 @@
+export const micro_ani_time = 0.45

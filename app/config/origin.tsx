@@ -1,0 +1,1 @@
+export const origin = 'https://movie-theater-kohl.vercel.app/'

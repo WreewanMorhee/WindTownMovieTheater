@@ -1,0 +1,1 @@
+export const form_path = (s: string) => s.toLowerCase().replaceAll(" ", "-");

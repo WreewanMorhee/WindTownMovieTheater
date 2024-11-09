@@ -1,0 +1,1 @@
+export const is_mobile = window.innerWidth < 1100

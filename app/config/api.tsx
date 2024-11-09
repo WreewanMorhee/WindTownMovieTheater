@@ -1,0 +1,6 @@
+export const api_key = '09a9840f58e42a79d903cb773ab2622b'
+export const yt_api_key = 'AIzaSyBc6WiNwfjAFgpz37TxOip6rkPy6RvbY6M'
+
+export const api_access_token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOWE5ODQwZjU4ZTQyYTc5ZDkwM2NiNzczYWIyNjIyYiIsIm5iZiI6MTcyODg5NTQ1Mi4wMzg4MDEsInN1YiI6IjY3MGNkOGZmZjU4YTkyMDZhYTQxNTBkNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jtRNn9s4sTadeH8knoynKWKVF1cqI8wyAXfJKCeKV0A'
+
+export const api_url = 'https://api.themoviedb.org/3'

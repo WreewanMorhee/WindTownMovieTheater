@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+:root {
+  --bg: #1C1C1C;
+  --red: #ff393c;
+  --yellow: #ffdb14;
+  --blue: #42A5F5;
+  --teal: #01a29b;
+  --btn-bg: #3e3e3e;
+  --deep-blue: #111827;
+
+  --header-height: 75px;
+  --page-margin: 16px;
+  --comp-padding: 16px;
+  --comp-little-padding: 8px;
+  --general-gap: 12px;
+  --to-top: 32px;
+  --rounded: 12px;
+  --transition-time: 0.45s;
+}
+
+@media (width < 1100px) {
+  :root {
+    --header-height: 135px
+  }
+}
+
+.text-ell {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+
+
+.shadow {
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.gradient {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(0deg, rgba(2, 0, 36, 1) 50%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+
+
+
+
+.icon {
+  cursor: pointer;
+}
+
+/* Start with the plus sign */
+.check {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset var(--transition-time) ease;
+  opacity: 0;
+  stroke: var(--teal);
+}
+
+.horizontal,
+.vertical {
+  transition: all var(--transition-time) ease;
+  stroke: white;
+}
+
+/* Active state: show checkmark, hide plus */
+.icon.active .check {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.icon.active .vertical {
+  transform: rotate(45deg) translate(12px, -12px);
+  transform-origin: 50% 50%;
+  opacity: 0;
+}
+
+.icon.active .horizontal {
+  transform: rotate(-45deg) translate(12px, 12px);
+  transform-origin: 50% 50%;
+  opacity: 0;
+}
+
+.hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.img-loading {
+  border-radius: 99em;
+}
+
+.img-loading::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  padding-top: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(/public/assets/D-reel.webp);
+}
+
+header {
+  transition: width var(--transition-time), border-radius var(--transition-time), transform var(--transition-time), filter var(--transition-time);
+}
+
+header.main {
+  width: 65vw;
+  border-radius: 99em;
+  transform-origin: 50% 50%;
+  transform: translate(17.5vw, 40vh);
+}
+
+header.hide {
+  transform: translateY(-100%);
+}
+
+header.main input,
+header.main button {
+  border-radius: 99em;
+}
+
+@media (width < 1100px) {
+  body {
+    overflow: hidden;
+  }
+
+  header.main {
+    width: calc(100vw - 32px);
+    transform: translate(0, 40vh);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 16px;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+}
+
+
+
+
+
+
+
+@media (width < 1100px) {
+  .fone-none {
+    display: none;
+  }
+}
+
+@media (width >=1100px) {
+  .desk-none {
+    display: none;
+  }
+}
+
+
+
+
+
+
+
