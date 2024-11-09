@@ -115,7 +115,7 @@ export default function Index() {
           style={{
             textAlignLast: "center",
           }}
-          className="fone:mx-auto bg-[--deep-blue] text-white fone:text-[18px] desk:text-[24px] border border-white text-center py-[8px] rounded-[8px] w-[320px] appearance-none focus:ring-0 focus:outline-none"
+          className="fone:mx-auto bg-[--deep-blue] text-white text-[18px] border border-white text-center py-[--comp-little-padding] rounded-[--rounded] w-[320px] appearance-none focus:ring-0 focus:outline-none"
         >
           <option value="date-old">依照收藏日期: 由遠到近</option>
           <option value="date-new">依照收藏日期: 由近到遠</option>

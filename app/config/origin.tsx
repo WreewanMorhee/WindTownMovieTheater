@@ -1,1 +1,1 @@
-export const origin = 'https://movie-theater-kohl.vercel.app/'
+export const origin = 'https://wind-town-movie-theater.vercel.app/'
