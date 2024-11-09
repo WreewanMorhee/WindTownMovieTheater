@@ -6,7 +6,7 @@ const DetailPageSkeleton = () => {
 
   return (
     <div
-      className="overflow-hidden z-[3] fixed left-[0px] bottom-[0px] w-[100vw] h-[calc(100svh-var(--header-height))] bg-[--deep-blue]"
+      className="overflow-hidden z-[3] fixed left-[0px] bottom-[0px] w-[100vw] h-[100svh] bg-[--deep-blue] pt-[--header-height]"
     >
 
 
