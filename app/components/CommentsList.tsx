@@ -45,7 +45,7 @@ const CommentsList = () => {
 
 
   const get_firebase_comment = () => {
-    fetch(`/get-comment?uid=${user_id}&vid=${vid}&debug=${window?.get_comment ? '1' : ''}`)
+    fetch(`/get-comment?uid=${user_id}&vid=${vid}&debug=${window?.get_comment_debug ? '1' : ''}`)
       .then((r) => r.json())
       .then((r) => {
 
