@@ -56,7 +56,7 @@ const GodHand = ({
         >
           <SlotMachine set_show_card={set_show_card} set_final_val={set_final_val} final_val={final_val} />
 
-          <div className="px-[--page-margin] mt-[80px] flex items-center justify-center text-[24px]">
+          <div className="px-[--page-margin] mt-[80px] flex items-center justify-center text-[24px] desk:w-[500px] desk:text-ell1 ">
             {!!final_val
               ? `今天就來看 “${video_god_choose.title}” 吧！`
               : "選出最適合今天的你的電影！"}
