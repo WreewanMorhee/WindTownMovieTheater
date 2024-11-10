@@ -57,7 +57,7 @@ const DetailPage = ({
           } as CustomCSSProperties
         }
         className="absolute inset-0 bg-no-repeat bg-center bg-cover fone:bg-[image:var(--mbg)] desk:bg-[image:var(--dbg)]"
-      ></div>
+     />
 
       <div className="absolute inset-0 bg-[#000000] opacity-60"></div>
 

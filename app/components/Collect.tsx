@@ -220,7 +220,7 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
       }: clickToCollectOrDelete}
       aria-label="Collect button"
       className={
-        "flex items-center justify-center bg-[--bg] text-white text-[32px] rounded-full absolute fone:top-[5%] fone:right-[4%] desk:top-[15px] desk:right-[15px] w-[20.1%] h-[13.45%] " +
+        "collect-btn flex items-center justify-center bg-[--bg] text-white text-[32px] rounded-full absolute fone:top-[5%] fone:right-[4%] desk:top-[15px] desk:right-[15px] w-[20.1%] h-[13.45%] " +
         className
       }
       style={style}
@@ -230,7 +230,7 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
         viewBox="0 0 100 100"
         width="100"
         height="100"
-        className={`relative icon ${is_collected ? "active" : ""}`}
+        className={`relative icon ${is_collected ? "active" : ""} z-[2]`}
         onClick={clickToOptimistic}
       >
         <line

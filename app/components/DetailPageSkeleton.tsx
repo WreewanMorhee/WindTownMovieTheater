@@ -13,7 +13,7 @@ const DetailPageSkeleton = () => {
 
       <div className=" relative container mx-auto fone:overflow-scroll fone:px-[--page-margin] desk:px-[0px] fone:block desk:grid grid-cols-1 md:grid-cols-3 gap-24 h-full ">
         {/* Movie Poster */}
-        <BasicSkeleton className="rounded-[--rounded] flex items-start justify-end col-span-1 mt-[--to-top] fone:mx-auto desk:mx-unset w-[300px] h-[450px]" />
+        <BasicSkeleton className="ml-auto rounded-[--rounded] flex items-start justify-end col-span-1 mt-[--to-top] fone:mx-auto desk:mx-unset w-[300px] h-[450px]" />
 
         {/* Movie Details */}
         <div className="scrollbar-hide col-span-2 fone:h-auto desk:h-full fone:overflow-hidden desk:overflow-scroll pb-[32px] pt-[--to-top]">
