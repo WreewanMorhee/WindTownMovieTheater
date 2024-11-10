@@ -2,17 +2,18 @@ import { Link, useLocation, useNavigate, useParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import useEnterKeyPress from "~/hooks/useEnterKeyPress";
 import { google_login, user_willingness_check } from "../tool/google-login";
-import LoginElf from "./LoginElf";
-import { is_in_app_browser } from "~/tool/is-in-app-browser";
-import { app_alert } from "~/tool/app-alert";
 import { useTea } from "~/drinktea/tea";
 
 const Header = ({
   avatar_src,
   user_id,
+  set_list_skeleton,
+  set_member_skeleton
 }: {
   avatar_src: string;
   user_id: string;
+  set_list_skeleton: (val: boolean) => void
+  set_member_skeleton: (val: boolean) => void
 }) => {
   const { pathname } = useLocation();
   const { keyword = "" } = useParams();
@@ -27,8 +28,10 @@ const Header = ({
     }
   }, [keyword]);
 
-  useEnterKeyPress((event) => {
+  useEnterKeyPress((event: KeyboardEvent) => {
     if (focus) {
+      make_optimistic(event, 'list')
+
       navigate(`/${movie_or_tv}/${text}`);
 
       event.preventDefault();
@@ -44,6 +47,28 @@ const Header = ({
 
   const is_main_page = pathname === "/";
   const is_to_see_list_page = pathname === '/member/to-see-list'
+
+  const make_optimistic = (e: React.MouseEvent<HTMLElement> | KeyboardEvent, type: 'list' | 'member') => {
+    let header = e.target as HTMLElement | null;
+
+    while (header && header.tagName !== 'HEADER') {
+      header = header.parentNode as HTMLElement | null;
+    }
+    
+    if (header && header.classList.contains('main')) {
+      header.classList.toggle('main');
+    }
+
+    if (type === 'list') {
+      set_list_skeleton(true)
+      set_member_skeleton(false)
+    } else {
+      set_member_skeleton(true)
+      set_list_skeleton(false)
+    }
+
+  }
+
 
   return (
     <header
@@ -84,6 +109,7 @@ const Header = ({
           my_cate={"search-movie"}
           set_movie_or_tv={set_movie_or_tv}
           text={text}
+          make_optimistic={make_optimistic}
         >
           電影
         </CateBtn>
@@ -91,6 +117,7 @@ const Header = ({
           my_cate={"search-tv"}
           set_movie_or_tv={set_movie_or_tv}
           text={text}
+          make_optimistic={make_optimistic}
         >
           影集
         </CateBtn>
@@ -100,10 +127,12 @@ const Header = ({
         className="ml-auto mr-[0px] cursor-pointer"
         onClick={
           !!user_id
-            ? () => {
+            ? (e: React.MouseEvent<HTMLElement>) => {
+              make_optimistic(e, 'member')
                 navigate(`/member/to-see-list`);
               }
-            : async () => {
+            : async (e: React.MouseEvent<HTMLElement>) => {
+              make_optimistic(e, 'member')
               const user_want_to = await user_willingness_check()
               if (!user_want_to) return 
               google_login()
@@ -140,11 +169,13 @@ const CateBtn = ({
   set_movie_or_tv,
   text,
   children,
+  make_optimistic
 }: {
   my_cate: string;
   set_movie_or_tv: (value: string) => void;
   text: string;
   children: string;
+  make_optimistic: (e: React.MouseEvent<HTMLButtonElement>, val: 'list' | 'member') => void
 }) => {
   const { cate, keyword = "" } = useParams();
   const navigate = useNavigate();
@@ -155,7 +186,7 @@ const CateBtn = ({
 
   const { pathname } = useLocation();
 
-  const make_optimistic = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const make_optimistic2 = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.className = general_css + active_css;
 
     const sibling =
@@ -173,10 +204,12 @@ const CateBtn = ({
   return (
     <button
       onClick={(e) => {
-        set_movie_or_tv(my_cate);
+
 
         if (!!text || !!keyword) {
-          // make_optimistic(e)
+          make_optimistic(e, 'list')
+          make_optimistic2(e)
+          set_movie_or_tv(my_cate);
           navigate(`/${my_cate}/${text || keyword}`);
         }
       }}
@@ -188,4 +221,4 @@ const CateBtn = ({
   );
 };
 
-export default Header;
+export default Header

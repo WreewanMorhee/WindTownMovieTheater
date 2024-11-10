@@ -50,10 +50,8 @@ const CommentContainer = ({
       >
         <Suspense fallback={
           <>
-           <BasicSkeleton className="rounded-[--rounded] w-full h-[42px]">
-
-           </BasicSkeleton>
-           <CommentSkeleton className="mt-[--to-top]" />
+           <BasicSkeleton className="rounded-[--rounded] w-full h-[42px]" />
+           <CommentSkeleton className="mt-[calc(var(--to-top))]" />
           </>
           }>
            <LazyLeaveComment />
