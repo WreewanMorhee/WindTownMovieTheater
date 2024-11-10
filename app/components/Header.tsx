@@ -132,7 +132,6 @@ const Header = ({
                 navigate(`/member/to-see-list`);
               }
             : async (e: React.MouseEvent<HTMLElement>) => {
-              make_optimistic(e, 'member')
               const user_want_to = await user_willingness_check()
               if (!user_want_to) return 
               google_login()
