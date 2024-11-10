@@ -24,7 +24,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const meta = detail_meta("tv")({...data, origin})
 
-  console.warn(meta, 123123);
   return { ...data, origin, meta };
 };
 

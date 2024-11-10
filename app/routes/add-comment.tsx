@@ -19,7 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
    const listRef2 = ref(db, 'comment-list/' + data.video_id);
 
 
-   const res =  await push(listRef2, {...data.comment_data, user_id: data.user_id})
+   const res =  await push(listRef2, {...data.comment_data, user_id: data.user_id, is_delete: false})
    return json({ ok: true, message: "Item added successfully", id:  res.key});
 
   } catch (error) {

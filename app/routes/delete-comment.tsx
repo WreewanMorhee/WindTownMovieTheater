@@ -1,5 +1,5 @@
 import { ActionFunction, json } from "@remix-run/node";
-import {  ref, get, remove } from "firebase/database";
+import {  ref, get, remove, update } from "firebase/database";
 import { error_res } from "~/tool/api-error-res";
 import { db } from "~/tool/firebase-config";
 
@@ -23,8 +23,9 @@ export const action: ActionFunction = async ({ request }) => {
     if (!snapshot.exists()) {
       return error_res(404)
     }
+
+    await update(itemRef, { is_delete: true })
   
-    await remove(itemRef)
     return json({ ok: true, message: "Item deleted successfully" });
 
   } catch (error) {

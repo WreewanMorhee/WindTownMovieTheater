@@ -49,7 +49,7 @@ const CommentsList = () => {
       .then((r) => r.json())
       .then((r) => {
 
-        if (r[Object.keys(r)[0]].user_id && r[Object.keys(r)[0]].snippet) {
+        if (r[Object.keys(r)[0]]?.user_id && r[Object.keys(r)[0]]?.snippet) {
           const firebase_id_list = Object.keys(r)
           if (firebase_id_list.length) {
             const comment_list: ThreadList[] = Object.values(r).map((data, index) => ({

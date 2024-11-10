@@ -1,4 +1,6 @@
-import { get, ref } from "firebase/database";
+import { equalTo, get, orderByChild, orderByKey, orderByValue, query, ref } from "firebase/database";
+import { where } from "firebase/firestore";
+import { CommentItemType } from "~/interface/comment-item";
 import { error_res } from "~/tool/api-error-res";
 import { db } from "~/tool/firebase-config";
 
@@ -24,11 +26,16 @@ export const loader = async ({request}: {request: Request}) => {
 
 
     if (snapshot.exists()) {
-      const data = snapshot.val();  
+
+      const allData = snapshot.val()  as Record<string, CommentItemType & {user_id: string, is_delete: boolean}>
+      const filteredData = Object.entries(allData)
+        .filter(([, value]) => value.is_delete === false)
+        .reverse()
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+
+    
+      return filteredData;
       
-      return Object.fromEntries(
-        Object.entries(data).reverse()
-      );
     } else {
       return {}
     }
