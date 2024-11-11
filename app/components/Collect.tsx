@@ -77,6 +77,7 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
   const hot_update = (data_stored: ToSeeData) => {
     update_set();
     update_to_see_list(data_stored);
+    set_is_removing(false);
   };
 
   const post_api = async () => {
@@ -189,6 +190,7 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
           await app_alert({content:`${response.message}。 \n 錯誤碼: ${response.code}` })
           recovery_optimistic(e);
           make_optimistic(e, true);
+          set_is_removing(false);
         }
       } catch (error: unknown) {
         if (is_my_error(error)) {
@@ -200,9 +202,10 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
         recovery_optimistic(e);
         make_optimistic(e, true);
         post_error(error)
+        set_is_removing(false);
       }
 
-       set_is_removing(false);
+       
     },
     tab === "to-see-list" ? 0 : 300
   );
