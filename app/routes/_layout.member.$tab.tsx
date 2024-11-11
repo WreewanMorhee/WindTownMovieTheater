@@ -164,7 +164,7 @@ export default function Index() {
           )}
       </div>
 
-      <div className="text-center fone:desk:mb-[30%] desk:mb-[10%] w-full text-[#ffffff] flex items-center justify-center flex-col fone:text-[20px] desk:text-[24px] tracking-[1px]">
+      <div className="text-center fone:mb-[30%] desk:mb-[10%] w-full text-[#ffffff] flex items-center justify-center flex-col fone:text-[20px] desk:text-[24px] tracking-[1px]">
         <div className="w-[160px] h-[160px] bg-cetner bg-no-repeat bg-contain bg-[url(/assets/loaded.webp)]" />
         繼續收藏更多影片吧！
       </div>

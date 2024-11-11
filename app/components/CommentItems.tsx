@@ -7,6 +7,7 @@ import { useParams } from "@remix-run/react";
 import { CommentItemType } from "~/interface/comment-item";
 import { is_my_error } from "~/interface/error";
 import { app_alert } from "~/tool/app-alert";
+import { optimistic_handle_num } from "~/config/optimistic-handle-num";
 
 
 const extract_times = (s: string): string[] | [] => {
@@ -98,12 +99,14 @@ const CommentItem: React.FC<CommentItemType> = ({
       target.style.transform = is_recovery ? '' : `translateX(100%)`;
       target.style.opacity = is_recovery ? '' :  "0";
 
+      let card_num = 0
       let nextSibling = target.nextElementSibling as HTMLElement | null;
-      while(nextSibling) {
+      while(nextSibling && card_num <= optimistic_handle_num) {
         nextSibling.style.transition = getComputedStyle(document.documentElement).getPropertyValue('--transition-time').trim()
         nextSibling.style.transform = is_recovery ? '' :  `translateY(-${target.getBoundingClientRect().height + 16}px)`
 
         nextSibling = nextSibling.nextElementSibling as HTMLElement | null
+        card_num ++
       }
     }
   }
@@ -125,12 +128,12 @@ const CommentItem: React.FC<CommentItemType> = ({
         if (response.ok) {
           set_res_ok(true)
         } else {
-          await app_alert({content: `${response.message}。錯誤碼: ${response.code}`})
+          await app_alert({content: `${response.message}。 \n 錯誤碼: ${response.code}`})
           make_optimistic(e, true)
         }
       } catch (error: unknown) {
         if (is_my_error(error)) {
-          await app_alert({content: `${error?.message}。錯誤碼: ${error?.code}`})
+          await app_alert({content: `${error?.message}。 \n 錯誤碼: ${error?.code}`})
         } else {
           await app_alert({content: `${error}`})
         }

@@ -92,7 +92,7 @@ const LeaveComment = () => {
         hot_update(response.id);
       } else {
         await app_alert({
-          content: `${response.message}。錯誤碼: ${response.code}`,
+          content: `${response.message}。\n 錯誤碼: ${response.code}`,
         });
         set_items((prev) => [...prev.slice(1, prev.length)]);
       }

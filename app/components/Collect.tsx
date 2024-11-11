@@ -11,6 +11,8 @@ import { useState } from "react";
 import { is_in_app_browser } from "~/tool/is-in-app-browser";
 import { app_alert } from "~/tool/app-alert";
 import { is_mobile } from "~/config/is-mobile.client";
+import { optimistic_handle_num } from "~/config/optimistic-handle-num";
+import { post_error } from "~/api/post-error";
 
 
 
@@ -125,12 +127,14 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
     const container = target.parentNode as HTMLElement;
 
     let next_sibling = target.nextSibling;
+    let card_num = 0
 
 
     while (
       next_sibling &&
       next_sibling instanceof HTMLElement &&
-      next_sibling.classList.contains("video-card")
+      next_sibling.classList.contains("video-card") &&
+      card_num <= optimistic_handle_num
     ) {
 
       if (next_sibling instanceof HTMLElement) {
@@ -158,6 +162,7 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
       }
 
       next_sibling = next_sibling.nextSibling;
+      card_num ++ 
     }
   };
 
@@ -181,19 +186,20 @@ const Collect = (props: { style?: React.CSSProperties, className?: string; video
         if (response.ok) {
           hot_update(data_stored);
         } else {
-          await app_alert({content:`${response.message}。錯誤碼: ${response.code}` })
+          await app_alert({content:`${response.message}。 \n 錯誤碼: ${response.code}` })
           recovery_optimistic(e);
           make_optimistic(e, true);
         }
       } catch (error: unknown) {
         if (is_my_error(error)) {
-          await app_alert({content:`${error?.message}。錯誤碼: ${error?.code}` })
+          await app_alert({content:`${error?.message}。 \n 錯誤碼: ${error?.code}` })
         } else {
           await app_alert({content:`${error}` })
         }
 
         recovery_optimistic(e);
         make_optimistic(e, true);
+        post_error(error)
       }
 
        set_is_removing(false);

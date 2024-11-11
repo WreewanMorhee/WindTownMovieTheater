@@ -2,7 +2,7 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 const sessionSecret = "dogdogcatcat";
-const storage = createCookieSessionStorage({
+export const storage = createCookieSessionStorage({
   cookie: {
     name: "my-remix-app",
     secure: process.env.NODE_ENV === "production",
@@ -17,12 +17,13 @@ const storage = createCookieSessionStorage({
 export async function createUserSession(
   use_id: string,
   redirectTo: string,
-  { avatar_src, user_name }: { avatar_src: string, user_name: string }
+  { avatar_src, user_name, token }: { token: string, avatar_src: string, user_name: string }
 ) {
   const session = await storage.getSession();
   session.set("use_id", use_id);
   session.set("avatar_src", avatar_src); // Store avatar URL in session
   session.set("user_name", user_name); // Store avatar URL in session
+  session.set("token", token); // Store avatar URL in session
   return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await storage.commitSession(session),

@@ -16,8 +16,8 @@ const GetGoogleLoginRelatedData = ({
     Promise.resolve().then(
       () => {
         set_avatar_src(avatar_src)
-        set_to_see_list_map(new Set(Object.keys(to_see_list)))
-        set_my_to_see_list(Object.values(typeof to_see_list === 'string' ? undefined : to_see_list ))
+        set_to_see_list_map(!!to_see_list ? new Set(Object.keys(to_see_list)) : new Set([]))
+        set_my_to_see_list(Object.values(to_see_list))
         set_user_id(user_id)
         set_user_name(user_name)
       }
