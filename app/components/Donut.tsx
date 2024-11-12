@@ -1,4 +1,3 @@
-// app/components/DonutChart.tsx
 import React from 'react';
 
 interface DonutChartProps {

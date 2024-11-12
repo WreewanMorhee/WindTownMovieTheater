@@ -3,7 +3,6 @@ import { post_error } from "~/api/post-error";
 
 export const error_res = (code: number, error?: unknown) => {
   if (code === 500) {
-    console.warn(error, 123123123123123)
     post_error(error);
   }
 

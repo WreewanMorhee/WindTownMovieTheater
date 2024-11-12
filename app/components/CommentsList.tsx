@@ -48,6 +48,7 @@ const CommentsList = () => {
     fetch(`/get-comment?uid=${user_id}&vid=${vid}&debug=${window?.get_comment_debug ? '1' : ''}`)
       .then((r) => r.json())
       .then((r) => {
+        set_fetched(true)
 
         if (r[Object.keys(r)[0]]?.user_id && r[Object.keys(r)[0]]?.snippet) {
           const firebase_id_list = Object.keys(r)
@@ -58,7 +59,6 @@ const CommentsList = () => {
             }));
             set_items((prev = []) => [...comment_list, ...prev]);
           }
-          set_fetched(true)
         }
 
         if (r.code) {

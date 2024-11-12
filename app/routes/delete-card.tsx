@@ -17,12 +17,10 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   try {
-    console.warn(user_id, item_id, 55555)
     const itemRef = ref(db, `${user_id}/to-see-list/${item_id}`);
     const snapshot = await get(itemRef);
 
     if (!snapshot.exists()) {
-      console.warn(787878778)
       return error_res(404)
     }
   

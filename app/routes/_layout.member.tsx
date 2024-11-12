@@ -1,11 +1,16 @@
 import { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Outlet, redirect, useNavigate } from "@remix-run/react";
+import { Outlet, redirect, useMatches, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import GeneralErrorBoundary from "~/components/GeneralErrorLayout";
 import { useTea } from "~/drinktea/tea";
 import { useRecordScrollPositionAtToSeeList } from "~/hooks/useRecordScrollPositionAtToSeeList";
 import { useScrollHideHeader } from "~/hooks/useScrollHideHeader";
+import { google_login, user_willingness_check } from "~/tool/google-login";
+
+interface LayoutData {
+  user_id: string
+}
 
 export const meta: MetaFunction = () => [
   { title: "我的待看清單" },
@@ -21,7 +26,7 @@ export const loader: LoaderFunction = ({ params }) => {
     return redirect("/member/to-see-list");
   }
 
-  if (params.tab !== 'to-see-list') {
+  if (params.tab !== "to-see-list") {
     throw new Response("Not Found", { status: 404 });
   }
 
@@ -47,6 +52,12 @@ export default function Index() {
   const scrollRecRef = useRecordScrollPositionAtToSeeList();
   const { scroll_down, scrollHeaderRef } = useScrollHideHeader();
 
+  const matches = useMatches();
+  const layoutMatch = matches.find((match) => match.id === "routes/_layout") as
+    | { data: LayoutData }
+    | undefined;
+  const user_id = layoutMatch?.data?.user_id || '';
+
   return (
     <>
       <div
@@ -55,43 +66,62 @@ export default function Index() {
           ""
         }
       >
-        <div
-          style={{
-            transitionTimingFunction: "ease",
-          }}
-          className={
-            "duration-[450ms] transition-[transform] bg-[--deep-blue] fone:z-[3] fone:fixed fone:top-[--header-height] justify-center text-white fone:p-[16px] desk:p-5 flex items-center overflow-hidden gap-[--general-gap] fone:flex-row-reverse desk:flex-col fone:w-full desk:w-1/4 fone:min-h-[98px] " +
-            (scroll_down ? " translate-y-[calc(var(--header-height)*-1)] " : "")
-          }
-        >
-          {/* Buttons */}
-          <button
-            onClick={() => navigate(`/member/to-see-list`)}
-            className="text-[#ffffff] bg-[--bg] border border-[--teal] w-[80%] p-[--comp-little-padding] rounded-[--rounded]"
-          >
-            待看清單 <br className="desk-none" /> ({my_to_see_list.length})
-          </button>
-          <button
-            onClick={clickToLogOut}
-            className="desk:mb-[20vh] bg-gray-700 w-[80%] p-2 rounded-[--rounded]"
-          >
-            登出
-          </button>
-        </div>
+        {!!user_id ? (
+          <>
+            <div
+              style={{
+                transitionTimingFunction: "ease",
+              }}
+              className={
+                "duration-[450ms] transition-[transform] bg-[--deep-blue] fone:z-[3] fone:fixed fone:top-[--header-height] justify-center text-white fone:p-[16px] desk:p-5 flex items-center overflow-hidden gap-[--general-gap] fone:flex-row-reverse desk:flex-col fone:w-full desk:w-1/4 fone:min-h-[98px] " +
+                (scroll_down
+                  ? " translate-y-[calc(var(--header-height)*-1)] "
+                  : "")
+              }
+            >
+              {/* Buttons */}
+              <button
+                onClick={() => navigate(`/member/to-see-list`)}
+                className="text-[#ffffff] bg-[--bg] border border-[--teal] w-[80%] p-[--comp-little-padding] rounded-[--rounded]"
+              >
+                待看清單 <br className="desk-none" /> ({my_to_see_list.length})
+              </button>
+              <button
+                onClick={clickToLogOut}
+                className="desk:mb-[20vh] bg-gray-700 w-[80%] p-2 rounded-[--rounded]"
+              >
+                登出
+              </button>
+            </div>
 
-        <div className="fone:hidden fone:w-[80%] desk:w-[1px] fone:min-h-[1px] desk:h-[50vh] bg-[--btn-bg] self-center"></div>
+            <div className="fone:hidden fone:w-[80%] desk:w-[1px] fone:min-h-[1px] desk:h-[50vh] bg-[--btn-bg] self-center"></div>
 
-        <div
-          ref={(e: HTMLDivElement | null) => {
-            scrollRecRef.current = e;
-            scrollHeaderRef.current = e;
-          }}
-          className={
-            "fone:h-[calc(100svh-var(--header-height))] transition-[--transition-time] transition-[transform] fone:w-full desk:w-3/4  overflow-scroll "
-          }
-        >
-          <Outlet />
-        </div>
+            <div
+              ref={(e: HTMLDivElement | null) => {
+                scrollRecRef.current = e;
+                scrollHeaderRef.current = e;
+              }}
+              className={
+                "fone:h-[calc(100svh-var(--header-height))] transition-[--transition-time] transition-[transform] fone:w-full desk:w-3/4  overflow-scroll "
+              }
+            >
+              <Outlet />
+            </div>
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <button
+              onClick={async () => {
+                const user_want_to = await user_willingness_check();
+                if (!user_want_to) return;
+                google_login();
+              }}
+              className="text-white py-[--comp-little-padding]  px-[--comp-padding] rounded-[--rounded] bg-[--btn-bg] border border-[transparent]"
+            >
+              點我登入
+            </button>
+          </div>
+        )}
       </div>
 
       {show_elf &&
@@ -112,4 +142,4 @@ export default function Index() {
   );
 }
 
-export const ErrorBoundary = GeneralErrorBoundary
+export const ErrorBoundary = GeneralErrorBoundary;

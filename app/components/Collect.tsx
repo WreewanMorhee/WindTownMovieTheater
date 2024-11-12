@@ -6,11 +6,7 @@ import { useParams } from "@remix-run/react";
 import { app_confirm } from "~/tool/app-confirm";
 import { is_child_inside_parent } from "~/tool/is-child-inside-parent";
 import { is_my_error } from "~/interface/error";
-import LoginElf from "./LoginElf";
-import { useState } from "react";
-import { is_in_app_browser } from "~/tool/is-in-app-browser";
 import { app_alert } from "~/tool/app-alert";
-import { is_mobile } from "~/config/is-mobile.client";
 import { optimistic_handle_num } from "~/config/optimistic-handle-num";
 import { post_error } from "~/api/post-error";
 
